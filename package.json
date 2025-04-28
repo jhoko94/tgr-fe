@@ -12,12 +12,12 @@
     "lint": "yarn lint:js && yarn lint:prettier",
     "lintfix": "prettier --write --list-different . && yarn lint:js --fix",
     "test": "jest",
-    "deploy": "npm install --force && npm run build && npm run generate"
+    "deploy": "npm install --legacy-peer-deps && npm run build && npm run generate"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/composition-api": "^0.33.1",
+    "@nuxtjs/composition-api": "^0.34.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/moment": "^1.6.1",
     "@vue/composition-api": "^1.7.1",

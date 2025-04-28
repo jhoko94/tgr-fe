@@ -12,7 +12,7 @@
     "lint": "yarn lint:js && yarn lint:prettier",
     "lintfix": "prettier --write --list-different . && yarn lint:js --fix",
     "test": "jest",
-    "deploy": "npm install --legacy-peer-deps && npm run build && npm run generate"
+    "deploy": "npm install --force && npm run build && npm run generate"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",

@@ -71,7 +71,7 @@
 		</div>
 		<WidgetDialogdetails v-model="dialog" :details="selectedDatatoDetail" :status-colors="statusColor" :title="'Detail Kasus'" :from-page="'pengembalian'" :width-dialog="1300" :max-height-table="'25vh'">
 			<template #actions>
-				<v-btn color="green" class="white--text text-capitalize" small>tambah bukti pengembalian</v-btn>
+				<v-btn color="green" class="white--text text-capitalize" small @click="addBuktiRefund()">tambah bukti pengembalian</v-btn>
 			</template>
 		</WidgetDialogdetails>
 		<WidgetDialogadd v-model="dialogAction" :title="'Apakah Nilai Kerugian Sudah Sesuai?'" :max-width="400">
@@ -85,6 +85,42 @@
 			</v-row>
 			<template #actions>
 				<v-btn color="green" class="white--text text-capitalize" small @click="simpan()">simpan</v-btn>
+			</template>
+		</WidgetDialogadd>
+		<WidgetDialogadd v-model="dialogAddBuktiRefund" :title="'Tambah Bukti Pengembalian'" :max-width="400">
+			<v-row dense>
+				<v-col cols="12">
+                    <v-menu
+                        ref="dateBuktiMenu"
+                        v-model="dateBuktiMenu"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                    >
+                        <template #activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="dateBuktiDate"
+                                label="Tanggal Mulai"
+                                readonly
+                                dense
+                                hide-details
+                                outlined
+								class="mt-1"
+                                v-bind="attrs"
+                                v-on="on"
+                                @click="openMenu('dateBuktiMenu')"
+                            ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="dateBuktiDate" @input="dateBuktiMenu = false"></v-date-picker>
+                    </v-menu>
+				</v-col>
+				<v-col cols="12">
+                    <v-text-field v-model="jmlRefund" label="Jumlah Pengembalian" outlined dense hide-details @keypress="onlyNumber($event)" />
+				</v-col>
+			</v-row>
+			<template #actions>
+				<v-btn color="green" class="white--text text-capitalize" small @click="simpanBuktiRefund()">simpan</v-btn>
 			</template>
 		</WidgetDialogadd>
 	</section>
@@ -127,7 +163,11 @@ export default {
 		nilaiKerugian: null,
 		userId: null,
         cekNilaiKerugian: "",
-        notes:""
+        notes:"",
+		dialogAddBuktiRefund: false,
+		dateBuktiMenu: false,
+		dateBuktiDate: null,
+		jmlRefund: null
 	}),
 	watch: {
         cekNilaiKerugian(newVal) {
@@ -321,7 +361,19 @@ export default {
             } catch (error) {
                 this.SET_LOADING(false);
             }
-        }
+        },
+		addBuktiRefund() {
+			this.dateBuktiDate = null
+			this.jmlRefund = null
+			this.dialogAddBuktiRefund = true
+		},
+		simpanBuktiRefund() {
+			console.log('tes simpan bukti refund:', this.dateBuktiDate)
+		},
+		openMenu(menu) {
+            this.dateBuktiMenu = false;
+            this[menu] = true;
+        },
 
 	}
 }

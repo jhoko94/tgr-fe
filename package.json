@@ -11,7 +11,8 @@
     "lint:prettier": "prettier --check .",
     "lint": "yarn lint:js && yarn lint:prettier",
     "lintfix": "prettier --write --list-different . && yarn lint:js --fix",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "npm install && npm run build && npm run generate"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
